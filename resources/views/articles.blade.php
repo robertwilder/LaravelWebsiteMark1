@@ -14,6 +14,15 @@
 					<a href="#main" class="button big scrolly">Learn More</a>
 				</div>
 			</section>
+			<div>
+			@foreach ($articles as $article)
+				<li>
+				<h3>{{$article->title}}</h3>
+				<p><a href="#">{{$article->excerpt}}</a></p>
+				<p>{{$article->body}}</p>
+			@endforeach
+				</li>
+			</div>
 
 	
 		

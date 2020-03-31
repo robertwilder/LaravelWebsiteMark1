@@ -30,7 +30,20 @@ Route::get('/about', function () {
 });
 
 Route::get('/articles', function () {
+    // $articles = App\Article::all();
+    // be careful calling all. as it grabs every article, depending on the project there could be 100s 
+    // $articles = App\Article::take(2)->get();
+    // this takes however many articles that you want to take
+    // $articles = App\Article::paginate(2);
+    // not sure about paginate - needs to be researched
+    $articles = App\Article::latest()->get();
+    // set an order for the list, puts the most recent at the top of the page 
+    // return $articles;
+    // return $article;
 
-    return view('articles');
+
+    return view('articles', [
+        'articles' => $articles
+    ]);
 
 });
