@@ -17,9 +17,9 @@
 			<div>
 			@foreach ($articles as $article)
 				<li>
-				<h3>{{$article->title}}</h3>
-				<p><a href="#">{{$article->excerpt}}</a></p>
-				<p>{{$article->body}}</p>
+				<h3><a href="articles/{{$article->id}}">{{$article->title}}</h3>
+				<p><a href="articles/{{$article->id}}">{{$article->excerpt}}</a></p>
+				
 			@endforeach
 				</li>
 			</div>

@@ -23,10 +23,12 @@ Route::get('/contact', function () {
 
 });
 
+
+
 Route::get('/about', function () {
-
+    
     return view('about');
-
+    
 });
 
 Route::get('/articles', function () {
@@ -40,10 +42,18 @@ Route::get('/articles', function () {
     // set an order for the list, puts the most recent at the top of the page 
     // return $articles;
     // return $article;
-
-
+    
+    
     return view('articles', [
         'articles' => $articles
-    ]);
+        ]);
+        
+    });
 
-});
+    Route::post('/articles', 'ArticlesController@store');
+    Route::get('/articles/create', 'ArticlesController@create');
+    // the order that you put these in matter 
+    Route::get('/articles/{article}', 'ArticlesController@show');
+    Route::get('/articles/{article}/edit', 'ArticlesController@edit');
+    Route::put('/articles/{article}', 'ArticlesController@update');
+    // the wildcard takes presidency over, so put create above 
