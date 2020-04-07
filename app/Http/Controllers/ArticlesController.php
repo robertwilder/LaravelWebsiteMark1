@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
 {
-    public function show($id)
+    public function show(Article $article)
     {
-        $article = Article::find($id);
+        // $article = Article::findorfail($id);
 
         return view('articles.show', ['articles' => $article]);
 
@@ -22,37 +22,43 @@ class ArticlesController extends Controller
         }
     public function store()
     {
-        request()->validate([
+        $validatedAttributes = request()->validate([
             'title' => 'required',
             'excerpt' => 'required',
             'body' => 'required'
             //you can add more with the validations tools implicit in laravel - good to look at docs
+            ]);
 
-        ]);
 
-        $article = new Article();
 
-        $article->title = request('title');
-        $article->excerpt = request('excerpt');
-        $article->body = request('body');
+        Article::create($validatedAttributes);
 
-        $article->save();
+        
+        // this will create and save an article without the need for below - though be careful of mass assertions guards
+
+        // $article = new Article();
+
+        // $article->title = request('title');
+        // $article->excerpt = request('excerpt');
+        // $article->body = request('body');
+
+        // $article->save();
 
         return redirect('/articles');
 
         // this needs to be cleaned up and needs validation 
     }
-    public function edit($id)
+    public function edit(Article $article)
     {
 
-        $article = Article::find($id);
+        // $article = Article::find($id);
 
 
         return view('articles.edit', ['article' => $article]);
     }
-    public function update($id)
+    public function update(Article $article)
     {
-        request()->validate([
+        $validatedAttributes = request()->validate([
             'title' => 'required',
             'excerpt' => 'required',
             'body' => 'required'
@@ -60,13 +66,7 @@ class ArticlesController extends Controller
 
         ]);
 
-        $article = Article::find($id);
-
-        $article->title = request('title');
-        $article->excerpt = request('excerpt');
-        $article->body = request('body');
-
-        $article->save();
+        $article->update($validatedAttributes);
 
         return redirect('/articles/' . $article->id);
     }
