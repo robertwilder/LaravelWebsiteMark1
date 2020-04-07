@@ -22,6 +22,13 @@ class ArticlesController extends Controller
         }
     public function store()
     {
+        request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body' => 'required'
+            //you can add more with the validations tools implicit in laravel - good to look at docs
+
+        ]);
 
         $article = new Article();
 
@@ -45,6 +52,13 @@ class ArticlesController extends Controller
     }
     public function update($id)
     {
+        request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body' => 'required'
+            //you can add more with the validations tools implicit in laravel - good to look at docs
+
+        ]);
 
         $article = Article::find($id);
 
