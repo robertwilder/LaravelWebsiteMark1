@@ -44,7 +44,7 @@ Route::get('/articles', function () {
     // return $article;
     
     
-    return view('articles', [
+    return view('articles/index', [
         'articles' => $articles
         ]);
         
@@ -53,6 +53,7 @@ Route::get('/articles', function () {
     Route::post('/articles', 'ArticlesController@store');
     Route::get('/articles/create', 'ArticlesController@create');
     // the order that you put these in matter 
+    Route::get('/articles', 'ArticlesController@index')->name('articles.index');
     Route::get('/articles/{article}', 'ArticlesController@show');
     Route::get('/articles/{article}/edit', 'ArticlesController@edit');
     Route::put('/articles/{article}', 'ArticlesController@update');

@@ -11,7 +11,7 @@
 						<h1>Create and article, or don't. See if I care </h1>
 						<p>blalalalalalalalalalalala</p>
 					</header>
-					<a href="#main" class="button big scrolly">Learn More</a>
+					{{-- <a href="#main" class="button big scrolly">Learn More</a> --}}
 				</div>
 			</section>
     <h1>New Article</h1>
@@ -56,6 +56,24 @@
                 @enderror
             </div>
         </div>
+        <div class="field">
+            
+            <label class="label" for="body">Tags</label>
+        
+        <div class="control">
+            <select
+                name="tags[]"
+                multiple>
+                @foreach ($tags as $tag)
+                    <option value="{{$tag->id}}">{{$tag->name}}</option>
+                @endforeach
+            </select>
+
+            @error ('body')
+                     <p class="help is-danger">{{ $errors->first('tags')}}</p>
+            @enderror
+        </div>
+    </div>
 
         <div class="field is-grouped">
             <div class="control"></div>

@@ -7,12 +7,18 @@
 				<div class="inner">
 					<header>
 						<h1>This is the single article page</h1>
-						<p>blalalalalalalalalalalala</p>
+						<p>{{$articles->title}}</p>
 					</header>
-					<a href="#main" class="button big scrolly">Learn More</a>
 				</div>
 			</section>
-			<h1>{{$articles->title}}</h1>
-	
+			
+			{{-- <h1>{{$articles->title}}</h1> --}}
+			<br/>
 			<p>{{$articles->body}}</p>
-@endsection
+
+
+@foreach ($articles->tags as $tag)
+					
+	<a href="{{route('articles.index', ['tag' => $tag->name])}}">{{$tag->name}}</a>
+					
+@endforeach

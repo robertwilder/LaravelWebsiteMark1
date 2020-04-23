@@ -11,7 +11,6 @@
 						<h1>Go on edit the article I dare You </h1>
 						<p>blalalalalalalalalalalala</p>
 					</header>
-					<a href="#main" class="button big scrolly">Learn More</a>
 				</div>
 			</section>
     <h1>Edit</h1>

@@ -4,34 +4,55 @@ namespace App\Http\Controllers;
 
 
 Use App\Article;
+Use App\Tag;
 
 use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
 {
-    public function show(Article $article)
+    public function index( Article $article){
+
+        if(request('tag')){
+            $articles = Tag::where('name', request('tag'))->firstOrFail()->articles;
+
+        }else{
+        $articles = Article::latest()->get();
+        }
+        return view('articles.index', ['articles' => $articles]);
+
+
+    }
+
+    public function show($id)
     {
         // $article = Article::findorfail($id);
-
+        $article = Article::find($id);
         return view('articles.show', ['articles' => $article]);
 
     }
     public function create()
         {
-            return view('articles.create');
+            return view('articles.create', ['tags' => Tag::all()]);
         }
     public function store()
     {
-        $validatedAttributes = request()->validate([
-            'title' => 'required',
-            'excerpt' => 'required',
-            'body' => 'required'
-            //you can add more with the validations tools implicit in laravel - good to look at docs
-            ]);
 
 
+        // $validatedAttributes = request()->validate([
+        //     'title' => 'required',
+        //     'excerpt' => 'required',
+        //     'body' => 'required'
+        //     //you can add more with the validations tools implicit in laravel - good to look at docs
+        //     ]);
+        $this->validateArticle();
 
-        Article::create($validatedAttributes);
+        $article = new Article(request(['title', 'excerpt', 'body']));
+        $article->user_id = 1;
+        $article->save();
+
+        $article->tags()->attach(request('tags'));
+
+        // Article::create($validatedArticle);
 
         
         // this will create and save an article without the need for below - though be careful of mass assertions guards
@@ -70,7 +91,16 @@ class ArticlesController extends Controller
 
         return redirect('/articles/' . $article->id);
     }
-    
+     protected function validateArticle()
+     {
+        return request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body' => 'required',
+            'tags' => 'exists:tags,id'
+            //you can add more with the validations tools implicit in laravel - good to look at docs
+            ]);
+      }
 }
 
 
